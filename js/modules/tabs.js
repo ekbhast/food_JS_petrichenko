@@ -1,40 +1,40 @@
-function tabs() {
-    // Tabs
+function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
+	let tabs = document.querySelectorAll(tabsSelector),
+		tabsContent = document.querySelectorAll(tabsContentSelector),
+		tabsParent = document.querySelector(tabsParentSelector);
 
-    let tabs = document.querySelectorAll('.tabcontent'),
-        tabsParent = document.querySelector('.tabheader__items'),
-        tabsHeaderItem = document.querySelectorAll('.tabheader__item');
-
-    function hideTabs() {
-        tabs.forEach((item, i) =>{
-            tabs[i].classList.add('hide');
-            tabs[i].classList.remove('show', 'fade');            
-            tabsHeaderItem[i].classList.remove('tabheader__item_active');
+	function hideTabContent() {
+        
+        tabsContent.forEach(item => {
+            item.classList.add('hide');
+            item.classList.remove('show', 'fade');
         });
-    }
 
-    function showTabs(i = 0) {
-        tabs[i].classList.remove('hide');
-        tabs[i].classList.add('show', 'fade');
-        tabsHeaderItem[i].classList.add('tabheader__item_active');
-    }
+        tabs.forEach(item => {
+            item.classList.remove(activeClass);
+        });
+	}
 
-    tabsParent.addEventListener('click', (event) =>{
+	function showTabContent(i = 0) {
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
+        tabs[i].classList.add(activeClass);
+    }
+    
+    hideTabContent();
+    showTabContent();
+
+	tabsParent.addEventListener('click', function(event) {
         const target = event.target;
-
-        if (target && target.classList.contains('tabheader__item')) {
-            // console.log(target);
+		if(target && target.classList.contains(tabsSelector.slice(1))) {
             tabs.forEach((item, i) => {
-                if (tabsHeaderItem[i] == target) {
-                    hideTabs();
-                    showTabs(i);
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
                 }
-            })
-        }
+            });
+		}
     });
-
-    hideTabs ();
-    showTabs();
 }
 
-module.exports = tabs;
+export default tabs;
