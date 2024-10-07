@@ -1,4 +1,7 @@
 'use strict';
+require('es6-promise').polyfill();
+
+import 'nodelist-foreach-polyfill'; // полифил подключенный как модуль из npm пакета
 import  tabs from'./modules/tabs';
 import  modal from'./modules/modal';
 import  timer from'./modules/timer';
